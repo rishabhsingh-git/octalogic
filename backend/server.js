@@ -4,21 +4,23 @@ const app = express();
 const cors = require('cors');
 const dotenv = require('dotenv');
 const { sequelize } = require('./models');
+const bookingRouter = require('./src/routes/booking/bookingRouter')
+const vehicleRouter = require('./src/routes/vehicle/vehicleRouter' )
 dotenv.config()
-
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-// We can define the frontend endpoint here
 const corsOptions = {
   origin: "*",
   methods: ["GET", "PUT", "POST", "PATCH", "DELETE"],
 };
 app.use(cors(corsOptions));
 app.use(helmet()); 
+
+
+app.use('/api/booking', bookingRouter)
+app.use('/api/vehicle', vehicleRouter)
 
 
 const PORT = process.env.PORT || 8080;
